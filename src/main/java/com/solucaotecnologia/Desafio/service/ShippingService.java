@@ -7,19 +7,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShippingService {
 
-    @Autowired
-    private final OrderService orderService;
 
-
-    public ShippingService(OrderService orderService) {
-        this.orderService = orderService;
-    }
 
     public double shipment(Order order) {
+        double valueBasic = order.getBasic();
+        if (valueBasic < 100.0) {
+            return 20.0;
+        } else if (valueBasic < 200.0) {
+            return 12.0;
+        }
 
-        double discountedPrice = order.getBasic() - (order.getBasic() * order.getDiscount());
-        return orderService.total(order, discountedPrice);
-
-
+        return 0.0;
     }
 }
